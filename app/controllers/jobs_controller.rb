@@ -1,8 +1,8 @@
 class JobsController < ApplicationController
-    before_action :authenticate_user!, only: [:index,:destroy, :show,:new ,:create]
-    before_action :find_jobs_id, only: [:destroy, :show, :edit]
+    before_action :authenticate_user!, only: [:index,:destroy, :show,:new ,:create , :update]
+    before_action :find_jobs_id, only: [:destroy, :show, :edit, :update]
     def index
-        @jobs = Job.all
+        @jobs = Job.whereis_hidden_is_false.recent.paginate(:page => params[:page], :per_page => 5)
     end
 
     def new
@@ -25,6 +25,14 @@ class JobsController < ApplicationController
 
     def edit
         
+    end
+
+    def update
+        if @jobs.update(jobs_params)
+            redirect_to job_path(@jobs), notice: "#{@jobs.title}修改成功!"
+        else
+            render :edit
+        end
     end
 
     def destroy

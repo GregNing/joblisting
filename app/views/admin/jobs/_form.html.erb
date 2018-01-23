@@ -1,0 +1,17 @@
+<%= simple_form_for [:admin , @jobs] do |f| %>
+    <div class="form-group">
+        <%= f.input :title, label: "職業", input_html: { class: "form-control" }%>
+        <%= f.input :description, label: "工作描述", input_html: { class: "form-control" }%>
+        <%= f.input :wage_upper_bound, label: "薪資上限", input_html: { class: "form-control" }%>
+        <%= f.input :wage_lower_bound, label: "最低薪資", input_html: { class: "form-control" }%>        
+        <%= f.input :contact_email, label: "聯絡方式(只能允許Email)", input_html: { class: "form-control" }%>        
+        <%= f.input :is_hidden,label: "是否顯示前台" , input_html: { class: "form-control", check: @jobs.is_hidden }%>
+        <%# https://github.com/plataformatec/simple_form/issues/643 %>
+        <% if false %>
+            <%= f.input_field :is_hidden, as: :check_boxes, boolean_style: :inline,checked_value: true,  input_html: { class: "form-control" }%>
+        &nbsp;<label>是否顯示前台</label>
+        <% end %>                    
+    </div>
+    <%= f.submit "送出", class: "btn btn-primary", data: {disable_with: "送出..."}%>
+<% end %>
+<br>
