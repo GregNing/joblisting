@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
             
-            <% if current_user.is_admin? %>
+            <% if current_user && current_user.is_admin? %>
                 Job Listing(後台)
             <% else %>
                 Job Listing
@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <% if !current_user %>
-                    <li><%= link_to "Sign in", new_user_registration_path %></li>                
+                    <li><%= link_to "Sign in", new_user_registration_path , class: "fa fa-sign-in"%></li>                
                     <li><%= link_to "Login", new_user_session_path %></li>
                 <% else %>
                     <li class="dropdown">
@@ -24,7 +24,7 @@
                     </a>
                     <ul class="dropdown-menu">
                     
-                    <% if current_user.is_admin? %>
+                    <% if current_user && current_user.is_admin? %>
                         <li><%= link_to "管理者職缺", admin_jobs_path %> </li>
                     <% end %>                                            
                         <li class="divider"> </li>

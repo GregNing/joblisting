@@ -20,7 +20,10 @@ class JobsController < ApplicationController
     end
 
     def show
-        
+        if @jobs.is_hidden
+        flash[:warning] = "This Job already archived"
+        redirect_to root_path
+    end
     end
 
     def edit
@@ -45,6 +48,6 @@ class JobsController < ApplicationController
     end
 
     def jobs_params
-        params.require(:job).permit(:title, :description)
+        params.require(:job).permit(:title, :description, :wage_upper_bound,:wage_lower_bound,:contact_email)
     end
 end

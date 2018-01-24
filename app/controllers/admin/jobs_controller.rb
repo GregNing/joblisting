@@ -1,6 +1,9 @@
 class Admin::JobsController < ApplicationController
-    before_action :authenticate_user!, only: [:index,:destroy, :show,:new ,:create , :update]    
-    before_action :find_jobs_id, only: [:destroy,:edit ,:show, :update]    
+    before_action :authenticate_user!, only: [:index,:destroy, :show,:new ,:create , :update,:publish,:hide]    
+    before_action :find_jobs_id, only: [:destroy,:edit ,:show, :update,:publish,:hide]    
+    before_action :require_is_admin
+    layout "admin"
+    
     def index
         @jobs = Job.all.recent.paginate(:page => params[:page], :per_page => 5)
     end
@@ -39,12 +42,22 @@ class Admin::JobsController < ApplicationController
         @jobs.destroy
         redirect_to jobs_path, alert: "刪除成功#{@jobs.title}!"
     end
+
+    def publish
+        @jobs.publish!
+        redirect_to admin_jobs_path, :notice => "#{@jobs.title}顯示成功"
+    end
+
+    def hide
+        @jobs.hide!        
+        redirect_to admin_jobs_path, notice: "#{@jobs.title}隱藏成功"
+    end
     private
     def find_jobs_id
         @jobs = Job.find(params[:id])
     end
 
     def admin_jobs_params
-        params.require(:job).permit(:title, :description,:wage_upper_bound,:wage_lower_bound,:contact_email)
+        params.require(:job).permit(:title, :description,:wage_upper_bound,:wage_lower_bound,:contact_email,:is_hidden)
     end
 end

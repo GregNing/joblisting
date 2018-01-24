@@ -1,36 +1,33 @@
 <div class="col-md-12">
 <div class="group">
-    <%= link_to("New Jobs", new_admin_job_path, class: "btn btn-primary pull-right") %>
+    <%= link_to("新增工作機會", new_admin_job_path, class: "btn btn-primary pull-right") %>
 </div>
 <table class="table table-hover">
     <thead>
-    <tr>    
+    <tr>             
         <td>職業</td>
         <td>工作內容</td>
-        <td>建立時間</td>
-        <td>是否在前台顯示</td>
+        <td>建立時間</td>        
     </tr>
     </thead>
     <tbody>
     <% @jobs.each do |job| %>
         <tr>          
-    <td><%= link_to(job.title, job_path(job)) %></td>
-    <td><%=  render_jobs_description(job) %></td>
     <td>
-    
-    <% if job.is_hidden? %>
-        是       
-    <% else %>    
-        否
-    <% end %>
-    
-
-    </td>
+    <%= render_jobs_status(job) %>
+    <%= link_to(job.title, job_path(job)) %></td>
+    <td><%=  render_jobs_description(job) %></td>    
     <td><%=  job.created_at %></td>
         <td>                
             <%= link_to("Edit", edit_admin_job_path(job), class: "btn btn-sm btn-default")%>
             <%= link_to("Delete", admin_job_path(job),    class: "btn btn-sm btn-default", 
                         method: :delete, data: { confirm: "Are you sure?" } )%>
+                        
+            <% if  job.is_hidden%>
+            <%= link_to("Publish", publish_admin_job_path(job),:method => :post ,:class => "btn btn-xs btn-default") %>
+            <% else %>
+            <%= link_to("Hide", hide_admin_job_path(job),method: :post, :class => "btn btn-xs btn-default") %>
+            <% end %>                                    
         </td>
         </tr>
     <% end %>

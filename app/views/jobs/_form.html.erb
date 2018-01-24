@@ -2,6 +2,9 @@
     <div class="form-group">
         <%= f.input :title, label: "職業", input_html: { class: "form-control" }%>
         <%= f.input :description, label: "工作描述", input_html: { class: "form-control" }%>
+        <%= f.input :wage_upper_bound, label: "薪資上限", input_html: { class: "form-control" }%>
+        <%= f.input :wage_lower_bound, label: "最低薪資", input_html: { class: "form-control" }%>        
+        <%= f.input :contact_email, label: "聯絡方式(只能允許Email)", input_html: { class: "form-control" }%>                
     </div>
     <%= f.submit "送出", class: "btn btn-primary", data: {disable_with: "送出..."}%>
 <% end %>
