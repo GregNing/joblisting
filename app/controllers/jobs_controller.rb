@@ -2,11 +2,20 @@ class JobsController < ApplicationController
     before_action :authenticate_user!, only: [:index,:destroy, :show,:new ,:create , :update]
     before_action :find_jobs_id, only: [:destroy, :show, :edit, :update]
     def index
-        @jobs = Job.whereis_hidden_is_false.recent.paginate(:page => params[:page], :per_page => 5)
+        #@jobs = Job.whereis_hidden_is_false.recent.paginate(:page => params[:page], :per_page => 5)
+        @jobs = case params[:order]#傳送 order進來判斷是哪個參數
+                when 'by_upper_bound'
+                Job.whereis_hidden_is_false.recentwage_upper_bound.paginate(:page => params[:page], :per_page => 5)
+                when 'by_lower_bound'
+                Job.whereis_hidden_is_false.recentwage_lower_bound.paginate(:page => params[:page], :per_page => 5)
+                else
+                Job.whereis_hidden_is_false.recent.paginate(:page => params[:page], :per_page => 5)
+                end
     end
 
     def new
         @jobs = Job.new
+        # @resume = Resume.new
     end
 
     def create

@@ -45,7 +45,8 @@ class Admin::JobsController < ApplicationController
 
     def publish
         @jobs.publish!
-        redirect_to admin_jobs_path, :notice => "#{@jobs.title}顯示成功"
+        # redirect_to admin_jobs_path, :notice => "#{@jobs.title}顯示成功"
+        redirect_to :back
     end
 
     def hide
