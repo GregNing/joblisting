@@ -3,16 +3,19 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :jobs do
-      member do
+    member do
         post :publish
         post :hide
-      end
     end
+    resources :resumes
+  end    
   end
 
   resources :jobs do
     resources :resumes
   end
+  resources :welcome
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'jobs#index'
+  # root 'jobs#index'
+  root 'welcome#index'
 end

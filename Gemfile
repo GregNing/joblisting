@@ -31,8 +31,9 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'rubocop'
-gem 'rubycritic'
+# gem 'rubocop'
+# gem 'rubycritic'
+
 gem 'bootstrap-sass'
 gem 'carrierwave', '~> 0.9'
 gem 'devise'

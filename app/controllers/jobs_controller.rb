@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   before_action :authenticate_user!, only: %i[index destroy show new create update]
   before_action :find_jobs_id, only: %i[destroy show edit update]
+  
   def index
     # @jobs = Job.whereis_hidden_is_false.recent.paginate(:page => params[:page], :per_page => 5)
     @jobs = case params[:order] # 傳送 order進來判斷是哪個參數
@@ -49,9 +50,9 @@ end
     @jobs.destroy
     redirect_to jobs_path, alert: "刪除成功#{@jobs.title}!"
   end
-
+  
   private
-
+  
   def find_jobs_id
     @jobs = Job.find(params[:id])
   end
