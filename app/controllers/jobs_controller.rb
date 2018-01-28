@@ -15,7 +15,8 @@ class JobsController < ApplicationController
   end
 
   def new
-    @jobs = Job.new
+    @jobs = Job.new    
+    # byebug
     # @resume = Resume.new
   end
 
